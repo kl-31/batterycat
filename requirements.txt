@@ -1,0 +1,15 @@
+scikit-learn==0.19.1
+pandas
+unidecode
+tweepy
+feedparser
+gspread
+oauth2client
+bs4
+lxml
+patool
+PyPDF2
+PyMuPDF
+html2text
+fuzzywuzzy
+python-Levenshtein
