@@ -183,6 +183,10 @@ def scrape_image(raw, journal):
 		links_raw = soup.find_all('a',{'class':'in-nw'})		
 		links=[dirname(raw)+'/'+x['href'].replace('expansion.html','large.jpg') for x in links_raw]
 		pic_raw = choice(links)
+		#this section is required for JPS and probably others
+		opener = urllib.request.build_opener()
+		opener.addheaders = [('User-agent', 'Mozilla/5.0')]
+		urllib.request.install_opener(opener)	
 		urllib.request.urlretrieve(pic_raw,'./data/pic_raw'+'.jpg')
 		call(['convert','-density','300','-define', 'trim:percent-background=2%','-trim','+repage','-background', 'white', '-alpha', 'remove', '-alpha', 'off','./data/pic_raw.jpg','./data/tweet_pic.png'])
 		
@@ -202,6 +206,12 @@ def scrape_image(raw, journal):
 		links_raw = soup.find_all('img')		
 		links = [x['src'] for x in links_raw]
 		pic_raw = choice(links)
+		
+		#this section is required for JPS and probably others
+		opener = urllib.request.build_opener()
+		opener.addheaders = [('User-agent', 'Mozilla/5.0')]
+		urllib.request.install_opener(opener)		
+		
 		urllib.request.urlretrieve(pic_raw,'./data/pic_raw'+'.jpg')
 		call(['convert','-density','300','-define', 'trim:percent-background=2%','-trim','+repage','-background', 'white', '-alpha', 'remove', '-alpha', 'off','./data/pic_raw.jpg','./data/tweet_pic.png'])
 
@@ -219,6 +229,10 @@ def scrape_image(raw, journal):
 			link = raw.title_detail.base.lower()
 			link = link.replace('articlelanding','articlepdf')
 			try:
+				#this section is required for JPS and probably others
+				opener = urllib.request.build_opener()
+				opener.addheaders = [('User-agent', 'Mozilla/5.0')]
+				urllib.request.install_opener(opener)	
 				urllib.request.urlretrieve(link,'./data/paper.pdf')
 				doc = fitz.open('./data/paper.pdf')
 				img_pgs = []
@@ -253,9 +267,6 @@ def scrape_image(raw, journal):
 			urllib.request.urlretrieve(pic_raw,'./data/pic_raw'+'.jpg')
 			call(['convert','-density','300','-define', 'trim:percent-background=2%','-trim','+repage','-background', 'white', '-alpha', 'remove', '-alpha', 'off','./data/pic_raw.jpg','./data/tweet_pic.png'])
 
-	elif journal == 'Advanced Energy Materials':
-		makedirs('./data/',exist_ok=True)
-		
 		
 	elif journal == "Arxiv Optics":
 		makedirs('./data/',exist_ok=True)
