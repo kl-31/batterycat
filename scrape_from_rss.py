@@ -67,87 +67,87 @@ else:
 
 written = 0
 posted = 0
-#titles_list = helpers.get_titles_db()
+titles_list = helpers.get_titles_db()
 #twit_handles = helpers.pull_handles_from_twitter(['rita_strack','joachimgoedhart'])
 
-with open('batterycat_rss_proba_samples.csv', mode='w') as data_file:
-	writer = csv.writer(data_file, delimiter=',')
-	for feed in feed_info.keys():	
-		print(feed)
-		feed_name = feed_info[feed]['name']
-		feed_path = feed_info[feed]['path']
-		feed_rss = feedparser.parse(feed_path)
-		for i in range(len(feed_rss.entries)):
-			entry = feed_rss.entries[i]
-			if feed_name == 'Journal of The Electrochemical Society': # for each journal, there is a raw source/link from which image can be pulled.
-				image_raw = entry.link
-				if 'authors' in entry:
-					authors_raw = entry.authors
-				elif 'author' in entry:
-					authors_raw = entry.author
-				else:
-					authors_raw = ''
-			elif feed_name in ['Journal of Power Sources','Electrochimica Acta','Journal of Electroanalytical Chemistry','Energy Storage Materials','ACS Energy Letters']:
-				image_raw = entry.summary
-				if 'authors' in entry:
-					authors_raw = entry.authors
-				elif 'author' in entry:
-					authors_raw = entry.author
-				else:
-					authors_raw = ''
-			elif feed_name == 'Energy & Environment Science': 
-				image_raw = entry
-				if 'authors' in entry:
-					authors_raw = entry.authors
-				elif 'author' in entry:
-					authors_raw = entry.author
-				else:
-					authors_raw = ''
-			elif feed_name == 'Joule':
-				image_raw = entry.link
-				if 'authors' in entry:
-					authors_raw = entry.authors
-				elif 'author' in entry:
-					authors_raw = entry.author
-				else:
-					authors_raw = ''
-			elif feed_name in ['Advanced Energy Materials','Batteries & Supercaps']:
-				image_raw = entry.content[0].value
-				authors_raw = entry.link # scrape authors from html
+#with open('batterycat_rss_proba_samples.csv', mode='w') as data_file:
+#	writer = csv.writer(data_file, delimiter=',')
+for feed in feed_info.keys():	
+	print(feed)
+	feed_name = feed_info[feed]['name']
+	feed_path = feed_info[feed]['path']
+	feed_rss = feedparser.parse(feed_path)
+	for i in range(len(feed_rss.entries)):
+		entry = feed_rss.entries[i]
+		if feed_name == 'Journal of The Electrochemical Society': # for each journal, there is a raw source/link from which image can be pulled.
+			image_raw = entry.link
+			if 'authors' in entry:
+				authors_raw = entry.authors
+			elif 'author' in entry:
+				authors_raw = entry.author
 			else:
-				image_raw = ''
-				if 'authors' in entry:
-					authors_raw = entry.authors
-				elif 'author' in entry:
-					authors_raw = entry.author
-				else:
-					authors_raw = ''
-			abstract = unidecode(entry.summary.replace('\n',' '))
-			row = [[unidecode(entry.title), entry.link, feed_name, abstract ]] 
-#			if row[0][0].strip().lower() not in titles_list: #temp disable
+				authors_raw = ''
+		elif feed_name in ['Journal of Power Sources','Electrochimica Acta','Journal of Electroanalytical Chemistry','Energy Storage Materials','ACS Energy Letters']:
+			image_raw = entry.summary
+			if 'authors' in entry:
+				authors_raw = entry.authors
+			elif 'author' in entry:
+				authors_raw = entry.author
+			else:
+				authors_raw = ''
+		elif feed_name == 'Energy & Environment Science': 
+			image_raw = entry
+			if 'authors' in entry:
+				authors_raw = entry.authors
+			elif 'author' in entry:
+				authors_raw = entry.author
+			else:
+				authors_raw = ''
+		elif feed_name == 'Joule':
+			image_raw = entry.link
+			if 'authors' in entry:
+				authors_raw = entry.authors
+			elif 'author' in entry:
+				authors_raw = entry.author
+			else:
+				authors_raw = ''
+		elif feed_name in ['Advanced Energy Materials','Batteries & Supercaps']:
+			image_raw = entry.content[0].value
+			authors_raw = entry.link # scrape authors from html
+		else:
+			image_raw = ''
+			if 'authors' in entry:
+				authors_raw = entry.authors
+			elif 'author' in entry:
+				authors_raw = entry.author
+			else:
+				authors_raw = ''
+		abstract = unidecode(entry.summary.replace('\n',' '))
+		row = [[unidecode(entry.title), entry.link, feed_name, abstract ]] 
+		if row[0][0].strip().lower() not in titles_list: 
 			proba_out = helpers.compute_proba(row)
 				#print(proba_out)
-				#helpers.write_to_db(proba_out) # temp disable
-			writer.writerow(proba_out)
+			helpers.write_to_db(proba_out)
+			#writer.writerow(proba_out)
 			written = written + 1
 #			if feed_name == 'Biomedical Optics Express' or feed_name == 'Journal of Biophotonics':
 #				#handles = helpers.get_author_handles(authors_raw,feed_name,twit_handles)
 #				if helpers.tweet_post('%s %s #biophotonics #biomedicaloptics' % (entry.title, entry.link),helpers.scrape_image(image_raw,feed_name)):
 #						posted = posted + 1			
-#			elif proba_out[-1] >=0.45:
-#				#handles = helpers.get_author_handles(authors_raw,feed_name,twit_handles)
-#				if helpers.tweet_post('%s (relevance: %.0f%%) %s #biophotonics #biomedicaloptics' % (entry.title, proba_out[-1]* 100,entry.link),helpers.scrape_image(image_raw,feed_name)):
-#						posted = posted + 1
+			if proba_out[-1] >=0.5:
+				#handles = helpers.get_author_handles(authors_raw,feed_name,twit_handles)
+				if helpers.tweet_post('%s (relevance: %.0f%%) %s #battchat #batterytwitter' % (entry.title, proba_out[-1]* 100,entry.link),helpers.scrape_image(image_raw,feed_name)):
+						posted = posted + 1
 #
 #				
-#		if posted >=22: # 22 hours elapsed  
-#		   break
-#	if posted >=22: # 22 hours elapsed  
-#		break
-#			#print('%d: %s' % (i,row[0]))
-#print('%d rows written.' % written)
-#print('%d tweets posted.' % posted)
-#
-##while datetime.datetime.today().weekday()==5 or datetime.datetime.today().weekday()==6:
-#if posted < 22:
-#	helpers.retweet_old(22-posted)
+		if posted >=22: # 22 hours elapsed  
+		   break
+	if posted >=22: # 22 hours elapsed  
+		break
+			#print('%d: %s' % (i,row[0]))
+print('%d rows written.' % written)
+print('%d tweets posted.' % posted)
+
+#while datetime.datetime.today().weekday()==5 or datetime.datetime.today().weekday()==6:
+if posted < 22:
+	helpers.retweet_old(22-posted)

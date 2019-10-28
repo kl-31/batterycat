@@ -86,10 +86,10 @@ def normalize_text(s):
 	return s
 
 def strip_html(s):
-		if s[:3]=='<p>' and not s[-4:]=='</p>': # differentiate between Nature and Science abstract formats
-			soup = BeautifulSoup(s,'lxml')
-			soup.p.decompose()
-			s = soup.get_text() 
+		#if s[:3]=='<p>' and not s[-4:]=='</p>': # differentiate between Nature and Science abstract formats
+		soup = BeautifulSoup(s,'lxml')
+		#soup.p.decompose()
+		s = soup.get_text() 
 		return s
 
 def pull_handles_from_twitter(accounts):
@@ -305,6 +305,7 @@ def compute_proba(titles):
 	
 	titles = pd.DataFrame(titles,columns=['title','link','journal_name','abstract'])
 	titles['abstract'] = [re.sub(r'^(.*?)<br\/>','',str(s)) for s in titles['abstract']] # remove all text up to and including <br\>
+	titles['title'] = [re.sub(r'\[[^\[\]]*\]','',str(s)) for s in titles['title']] # remove all text within [] brackets
 	titles['abstract'] = [re.sub(r'\[[^\[\]]*\]','',str(s)) for s in titles['abstract']] # remove all text within [] brackets
 	titles['abstract'] = [strip_html(s) for s in titles['abstract']]
 	titles['text'] = [normalize_text(re.sub(r'\([^()]*\)', '', str(s))) for s in titles['title']+' '+titles['abstract']] 
@@ -329,14 +330,14 @@ def tweet_post(line,image_flag):
 	try:
 		if image_flag == False:
 			api.update_status(line)
-			sleep(55*60) 
+			sleep(2*60) 
 			return True
 		else:
 			try:
 				api.update_with_media('./data/tweet_pic.png',line)
 			except:
 				api.update_status(line)
-			sleep(55*60) 
+			sleep(2*60) 
 			return True
 	except tweepy.TweepError as e:
 		print(e.args[0][0]['message'])
