@@ -6,6 +6,7 @@ import json
 from os.path import isfile
 import helpers
 import datetime
+import re
 
 if isfile('feed_info.txt'):
 	feed_info = json.load(open("feed_info.txt"))
@@ -124,7 +125,7 @@ for feed in feed_info.keys():
 				authors_raw = ''
 		abstract = unidecode(entry.summary.replace('\n',' '))
 		row = [[unidecode(entry.title), entry.link, feed_name, abstract ]] 
-		if row[0][0].strip().lower() not in titles_list: 
+		if re.sub(r'\[[^\[\]]*\]','',str(row[0][0])).strip().lower() not in titles_list:  # remove [text]
 			proba_out = helpers.compute_proba(row)
 				#print(proba_out)
 			helpers.write_to_db(proba_out)
