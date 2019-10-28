@@ -140,10 +140,10 @@ for feed in feed_info.keys():
 						posted = posted + 1
 #
 #				
-		if posted >=22: # 22 hours elapsed  
-		   break
-	if posted >=22: # 22 hours elapsed  
-		break
+#		if posted >=22: # 22 hours elapsed  
+#		   break
+#	if posted >=22: # 22 hours elapsed  
+#		break
 			#print('%d: %s' % (i,row[0]))
 print('%d rows written.' % written)
 print('%d tweets posted.' % posted)
