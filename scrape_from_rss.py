@@ -136,7 +136,7 @@ for feed in feed_info.keys():
 #						posted = posted + 1			
 			if proba_out[-1] >=0.5:
 				#handles = helpers.get_author_handles(authors_raw,feed_name,twit_handles)
-				if helpers.tweet_post('%s (relevance: %.0f%%) %s #battchat #batterytwitter' % (entry.title, proba_out[-1]* 100,entry.link),helpers.scrape_image(image_raw,feed_name)):
+				if helpers.tweet_post('%s (relevance: %.0f%%) %s #battchat #batterytwitter' % (proba_out[0], proba_out[-1]* 100,entry.link),helpers.scrape_image(image_raw,feed_name)):
 						posted = posted + 1
 #
 #				
