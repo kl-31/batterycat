@@ -205,15 +205,18 @@ def scrape_image(raw, journal):
 		soup = BeautifulSoup(raw,'lxml')
 		links_raw = soup.find_all('img')		
 		links = [x['src'] for x in links_raw]
-		pic_raw = choice(links)
+		if len(links) == 0:
+			return False
+		else:
+			pic_raw = choice(links)
 		
-		#this section is required for JPS and probably others
-		opener = urllib.request.build_opener()
-		opener.addheaders = [('User-agent', 'Mozilla/5.0')]
-		urllib.request.install_opener(opener)		
-		
-		urllib.request.urlretrieve(pic_raw,'./data/pic_raw'+'.jpg')
-		call(['convert','-density','300','-define', 'trim:percent-background=2%','-trim','+repage','-background', 'white', '-alpha', 'remove', '-alpha', 'off','./data/pic_raw.jpg','./data/tweet_pic.png'])
+			#this section is required for JPS and probably others
+			opener = urllib.request.build_opener()
+			opener.addheaders = [('User-agent', 'Mozilla/5.0')]
+			urllib.request.install_opener(opener)		
+			
+			urllib.request.urlretrieve(pic_raw,'./data/pic_raw'+'.jpg')
+			call(['convert','-density','300','-define', 'trim:percent-background=2%','-trim','+repage','-background', 'white', '-alpha', 'remove', '-alpha', 'off','./data/pic_raw.jpg','./data/tweet_pic.png'])
 
 	elif journal == 'Energy & Environment Science':
 		makedirs('./data/',exist_ok=True)
