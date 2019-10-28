@@ -34,44 +34,44 @@ from fuzzywuzzy import fuzz
 #import bitly_api
 #import sys
 
-#scopes = ['https://spreadsheets.google.com/feeds',
-#	  'https://www.googleapis.com/auth/drive']
-#keyfile_dict = {
-#    'auth_provider_x509_cert_url': environ['GSPREAD_AUTH_PROVIDER'],
-#    'auth_uri': environ['GSPREAD_AUTH_URI'],
-#    'client_email': environ['GSPREAD_CLIENT_EMAIL'],
-#    'client_id': environ['GSPREAD_CLIENT_ID'],
-#    'client_x509_cert_url': environ['GSPREAD_CLIENT_X509'],
-#    'private_key': environ['GSPREAD_PRIVATE_KEY'].replace('\\n', '\n'),
-#    'private_key_id': environ['GSPREAD_PRIVATE_KEY_ID'],
-#    'project_id': environ['GSPREAD_PROJECT_ID'],
-#    'token_uri': environ['GSPREAD_TOKEN_URI'],
-#    'type': environ['GSPREAD_TYPE']
-#}
+scopes = ['https://spreadsheets.google.com/feeds',
+	  'https://www.googleapis.com/auth/drive']
+keyfile_dict = {
+    'auth_provider_x509_cert_url': environ['GSPREAD_AUTH_PROVIDER'],
+    'auth_uri': environ['GSPREAD_AUTH_URI'],
+    'client_email': environ['GSPREAD_CLIENT_EMAIL'],
+    'client_id': environ['GSPREAD_CLIENT_ID'],
+    'client_x509_cert_url': environ['GSPREAD_CLIENT_X509'],
+    'private_key': environ['GSPREAD_PRIVATE_KEY'].replace('\\n', '\n'),
+    'private_key_id': environ['GSPREAD_PRIVATE_KEY_ID'],
+    'project_id': environ['GSPREAD_PROJECT_ID'],
+    'token_uri': environ['GSPREAD_TOKEN_URI'],
+    'type': environ['GSPREAD_TYPE']
+}
 
 
-#def get_titles_db():
-#	#print(keyfile_dict)
-#	creds = ServiceAccountCredentials.from_json_keyfile_dict(
-#    keyfile_dict=keyfile_dict, scopes=scopes)
-#	#creds = ServiceAccountCredentials.from_json_keyfile_name('client_secret.json', scope)
-#	client = gspread.authorize(creds)
-#	sh = client.open_by_key('1yKc23vjZ9AGoUaMP1ebo9q31zVj5HEq0vUq2_C5shBs')
-#	worksheet = sh.sheet1
-#	titles_list = worksheet.col_values(1)	
-#	titles_list = [s.strip().lower() for s in titles_list]
-#	return titles_list
-#
-#def write_to_db(row):
-#	creds = ServiceAccountCredentials.from_json_keyfile_dict(
-#    keyfile_dict=keyfile_dict, scopes=scopes)
-#	#creds = ServiceAccountCredentials.from_json_keyfile_name('client_secret.json', scope)
-#	client = gspread.authorize(creds)
-#	sh = client.open_by_key('1yKc23vjZ9AGoUaMP1ebo9q31zVj5HEq0vUq2_C5shBs')
-#	worksheet = sh.sheet1
-#	worksheet.insert_row(row+[str(datetime.date.today())],1)
-#	sleep(1) # google api 60 write requests per 60 sec
-#	return
+def get_titles_db():
+	#print(keyfile_dict)
+	creds = ServiceAccountCredentials.from_json_keyfile_dict(
+    keyfile_dict=keyfile_dict, scopes=scopes)
+	#creds = ServiceAccountCredentials.from_json_keyfile_name('client_secret.json', scope)
+	client = gspread.authorize(creds)
+	sh = client.open_by_key('1yKc23vjZ9AGoUaMP1ebo9q31zVj5HEq0vUq2_C5shBs')
+	worksheet = sh.sheet1
+	titles_list = worksheet.col_values(1)	
+	titles_list = [s.strip().lower() for s in titles_list]
+	return titles_list
+
+def write_to_db(row):
+	creds = ServiceAccountCredentials.from_json_keyfile_dict(
+    keyfile_dict=keyfile_dict, scopes=scopes)
+	#creds = ServiceAccountCredentials.from_json_keyfile_name('client_secret.json', scope)
+	client = gspread.authorize(creds)
+	sh = client.open_by_key('1yKc23vjZ9AGoUaMP1ebo9q31zVj5HEq0vUq2_C5shBs')
+	worksheet = sh.sheet1
+	worksheet.insert_row(row+[str(datetime.date.today())],1)
+	sleep(1) # google api 60 write requests per 60 sec
+	return
 
 
 def normalize_text(s):
