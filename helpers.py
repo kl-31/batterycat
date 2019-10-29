@@ -265,7 +265,7 @@ def scrape_image(raw, journal):
 		else:
 			links = []
 			for link in links_raw:
-				links.append(link['href'])
+				links.append(link['href'][2:])
 			pic_raw = choice(links)
 			urllib.request.urlretrieve(pic_raw,'./data/pic_raw'+'.jpg')
 			call(['convert','-density','300','-define', 'trim:percent-background=2%','-trim','+repage','-background', 'white', '-alpha', 'remove', '-alpha', 'off','./data/pic_raw.jpg','./data/tweet_pic.png'])
