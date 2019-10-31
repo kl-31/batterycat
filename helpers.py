@@ -200,7 +200,7 @@ def scrape_image(raw, journal):
 #		urllib.request.urlretrieve(link,'./data/tweet_pic'+extension)
 #		call(['convert','-density','300','-define', 'trim:percent-background=2%','-trim','+repage','-background', 'white', '-alpha', 'remove', '-alpha', 'off','./data/tweet_pic'+extension,'./data/tweet_pic.png'])
 
-	elif journal in ['Journal of Power Sources','Electrochimica Acta','Journal of Electroanalytical Chemistry','Energy Storage Materials','Advanced Energy Materials','ACS Energy Letters','Batteries & Supercaps']:
+	elif journal in ['Journal of Power Sources','Electrochimica Acta','Journal of Electroanalytical Chemistry','Energy Storage Materials','Advanced Energy Materials','ACS Energy Letters','Batteries & Supercaps','Nano Energy']:
 		makedirs('./data/',exist_ok=True)
 		soup = BeautifulSoup(raw,'lxml')
 		links_raw = soup.find_all('img')		
@@ -344,14 +344,14 @@ def tweet_post(line,image_flag):
 	try:
 		if image_flag == False:
 			api.update_status(line)
-			sleep(10*60) 
+			sleep(30*60) 
 			return True
 		else:
 			try:
 				api.update_with_media('./data/tweet_pic.png',line)
 			except:
 				api.update_status(line)
-			sleep(10*60) 
+			sleep(30*60) 
 			return True
 	except tweepy.TweepError as e:
 		print(e.args[0][0]['message'])
@@ -368,7 +368,7 @@ def retweet_old(number):
 	api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True,retry_count=10, retry_delay=15, retry_errors=set([503]))
 	tweets = []
 	# retweeting tweets
-	tweets = api.user_timeline(count = 100)
+	tweets = api.user_timeline(count = 200)
 	
 	for i in range(number):
 		while 1:
@@ -377,7 +377,7 @@ def retweet_old(number):
 				break
 		try:
 			api.retweet(tweet.id)
-			sleep(60*60)	
+			sleep(30*60)	
 		except:
 			pass
 	return 	

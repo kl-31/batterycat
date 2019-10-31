@@ -63,7 +63,11 @@ else:
 					  'chemrxiv':
 					{'name': 'ChemRxiv',
 						  'path': 'https://chemrxiv.org/rss/portal_category/chemrxiv/1948',
-						  'etag': ''}							
+						  'etag': ''},					
+					  'nanoenergy':
+					{'name': 'Nano Energy',
+						  'path': 'http://rss.sciencedirect.com/publication/science/22112855',
+						  'etag': ''}								
 					}
 
 written = 0
@@ -88,7 +92,7 @@ for feed in feed_info.keys():
 				authors_raw = entry.author
 			else:
 				authors_raw = ''
-		elif feed_name in ['Journal of Power Sources','Electrochimica Acta','Journal of Electroanalytical Chemistry','Energy Storage Materials','ACS Energy Letters']:
+		elif feed_name in ['Journal of Power Sources','Electrochimica Acta','Journal of Electroanalytical Chemistry','Energy Storage Materials','ACS Energy Letters','Nano Energy']:
 			image_raw = entry.summary
 			if 'authors' in entry:
 				authors_raw = entry.authors
@@ -139,16 +143,15 @@ for feed in feed_info.keys():
 				#handles = helpers.get_author_handles(authors_raw,feed_name,twit_handles)
 				if helpers.tweet_post('%s (relevance: %.0f%%) %s #battchat #batterytwitter' % (proba_out[0], proba_out[-1]* 100,entry.link),helpers.scrape_image(image_raw,feed_name)):
 						posted = posted + 1
-#
-#				
-#		if posted >=22: # 22 hours elapsed  
-#		   break
-#	if posted >=22: # 22 hours elapsed  
-#		break
-			#print('%d: %s' % (i,row[0]))
+
+				
+		if posted >=23: # 22 hours elapsed  
+		   break
+	if posted >=23: # 22 hours elapsed  
+		break
 print('%d rows written.' % written)
 print('%d tweets posted.' % posted)
 
 #while datetime.datetime.today().weekday()==5 or datetime.datetime.today().weekday()==6:
-if posted < 22:
-	helpers.retweet_old(22-posted)
+if posted < 23:
+	helpers.retweet_old(23-posted)
