@@ -14,3 +14,4 @@ PyMuPDF
 html2text
 fuzzywuzzy
 python-Levenshtein
+APScheduler==3.0.0
