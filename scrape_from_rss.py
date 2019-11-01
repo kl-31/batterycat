@@ -67,6 +67,10 @@ else:
 					  'nanoenergy':
 					{'name': 'Nano Energy',
 						  'path': 'http://rss.sciencedirect.com/publication/science/22112855',
+						  'etag': ''},
+					  'jmca':
+					{'name': 'JMCA',
+						  'path': 'http://feeds.rsc.org/rss/ta',
 						  'etag': ''}								
 					}
 
@@ -100,7 +104,7 @@ for feed in feed_info.keys():
 				authors_raw = entry.author
 			else:
 				authors_raw = ''
-		elif feed_name == 'Energy & Environment Science': 
+		elif feed_name in ['Energy & Environment Science', 'JMCA']: 
 			image_raw = entry
 			if 'authors' in entry:
 				authors_raw = entry.authors

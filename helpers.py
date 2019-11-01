@@ -221,7 +221,7 @@ def scrape_image(raw, journal):
 			urllib.request.urlretrieve(pic_raw,'./data/pic_raw'+'.jpg')
 			call(['convert','-density','300','-define', 'trim:percent-background=2%','-trim','+repage','-background', 'white', '-alpha', 'remove', '-alpha', 'off','./data/pic_raw.jpg','./data/tweet_pic.png'])
 
-	elif journal == 'Energy & Environment Science':
+	elif journal in ['Energy & Environment Science','JMCA']:
 		makedirs('./data/',exist_ok=True)
 		if 'GA?' in raw.summary:
 			print('EES: graphical abstract available')
