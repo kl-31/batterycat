@@ -182,7 +182,10 @@ def scrape_image(raw, journal):
 		soup = BeautifulSoup(urllib.request.urlopen(raw).read(),'lxml')
 		links_raw = soup.find_all('a',{'class':'in-nw'})		
 		links=[dirname(raw)+'/'+x['href'].replace('expansion.html','large.jpg') for x in links_raw]
-		pic_raw = choice(links)
+		if len(links)>0:
+			pic_raw = choice(links)
+		else:
+			return False
 		#this section is required for JPS and probably others
 		opener = urllib.request.build_opener()
 		opener.addheaders = [('User-agent', 'Mozilla/5.0')]
