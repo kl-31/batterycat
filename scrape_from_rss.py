@@ -71,7 +71,15 @@ else:
 					  'jmca':
 					{'name': 'JMCA',
 						  'path': 'http://feeds.rsc.org/rss/ta',
-						  'etag': ''}								
+						  'etag': ''},
+					  'chemistry':
+					{'name': 'Chemistry of Materials',
+						  'path': 'http://feeds.feedburner.com/acs/cmatex',
+						  'etag': ''},
+					  'acsami':
+					{'name': 'ACS Applied Materials',
+						  'path': 'http://feeds.feedburner.com/acs/aamick',
+						  'etag': ''}									
 					}
 
 written = 0
@@ -96,7 +104,8 @@ for feed in feed_info.keys():
 				authors_raw = entry.author
 			else:
 				authors_raw = ''
-		elif feed_name in ['Journal of Power Sources','Electrochimica Acta','Journal of Electroanalytical Chemistry','Energy Storage Materials','ACS Energy Letters','Nano Energy']:
+		elif feed_name in ['Journal of Power Sources','Electrochimica Acta','Journal of Electroanalytical Chemistry','Energy Storage Materials',
+					 'ACS Energy Letters','Nano Energy','Chemistry of Materials','ACS Applied Materials']:
 			image_raw = entry.summary
 			if 'authors' in entry:
 				authors_raw = entry.authors
