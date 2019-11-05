@@ -79,6 +79,18 @@ else:
 					  'acsami':
 					{'name': 'ACS Applied Materials',
 						  'path': 'http://feeds.feedburner.com/acs/aamick',
+						  'etag': ''},
+					  'advmat':
+					{'name': 'Advanced Materials',
+						  'path': 'https://onlinelibrary.wiley.com/feed/15214095/most-recent',
+						  'etag': ''},
+					  'advfunmat':
+					{'name': 'Advanced Functional Materials',
+						  'path': 'https://onlinelibrary.wiley.com/feed/16163028/most-recent',
+						  'etag': ''},
+					  'mathoriz':
+					{'name': 'Materials Horizons',
+						  'path': 'http://feeds.rsc.org/rss/mh',
 						  'etag': ''}									
 					}
 
@@ -113,7 +125,7 @@ for feed in feed_info.keys():
 				authors_raw = entry.author
 			else:
 				authors_raw = ''
-		elif feed_name in ['Energy & Environment Science', 'JMCA']: 
+		elif feed_name in ['Energy & Environment Science', 'JMCA','Materials Horizons']: 
 			image_raw = entry
 			if 'authors' in entry:
 				authors_raw = entry.authors
@@ -129,7 +141,7 @@ for feed in feed_info.keys():
 				authors_raw = entry.author
 			else:
 				authors_raw = ''
-		elif feed_name in ['Advanced Energy Materials','Batteries & Supercaps']:
+		elif feed_name in ['Advanced Energy Materials','Batteries & Supercaps','Advanced Materials','Advanced Functional Materials']:
 			image_raw = entry.content[0].value
 			authors_raw = entry.link # scrape authors from html
 		else:

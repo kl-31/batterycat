@@ -203,8 +203,9 @@ def scrape_image(raw, journal):
 #		urllib.request.urlretrieve(link,'./data/tweet_pic'+extension)
 #		call(['convert','-density','300','-define', 'trim:percent-background=2%','-trim','+repage','-background', 'white', '-alpha', 'remove', '-alpha', 'off','./data/tweet_pic'+extension,'./data/tweet_pic.png'])
 
-	elif journal in ['Journal of Power Sources','Electrochimica Acta','Journal of Electroanalytical Chemistry','Energy Storage Materials',
-				  'Advanced Energy Materials','ACS Energy Letters','Batteries & Supercaps','Nano Energy','Chemistry of Materials','ACS Applied Materials']:
+	elif journal in ['Journal of Power Sources','Electrochimica Acta','Journal of Electroanalytical Chemistry','Energy Storage Materials','Advanced Materials',
+				  'Advanced Energy Materials','ACS Energy Letters','Batteries & Supercaps','Nano Energy','Chemistry of Materials',
+				  'Advanced Functional Materials','ACS Applied Materials']:
 		makedirs('./data/',exist_ok=True)
 		soup = BeautifulSoup(raw,'lxml')
 		links_raw = soup.find_all('img')		
@@ -222,7 +223,7 @@ def scrape_image(raw, journal):
 			urllib.request.urlretrieve(pic_raw,'./data/pic_raw'+'.jpg')
 			call(['convert','-density','300','-define', 'trim:percent-background=2%','-trim','+repage','-background', 'white', '-alpha', 'remove', '-alpha', 'off','./data/pic_raw.jpg','./data/tweet_pic.png'])
 
-	elif journal in ['Energy & Environment Science','JMCA']:
+	elif journal in ['Energy & Environment Science','JMCA','Materials Horizons']:
 		makedirs('./data/',exist_ok=True)
 		if 'GA?' in raw.summary:
 			print('EES: graphical abstract available')
