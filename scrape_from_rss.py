@@ -42,7 +42,7 @@ else:
 					  'etag': ''},	  
 				'ncomms':
 					{'name': 'Nature Comms',
-					  'path': 'https://www.nature.com/nnano.rss',
+					  'path': 'http://feeds.nature.com/ncomms/rss/current',
 					  'etag': ''},	  
 				'ees':
 					{'name': 'Energy & Environment Science',
