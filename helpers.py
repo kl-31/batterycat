@@ -205,7 +205,7 @@ def scrape_image(raw, journal):
 
 	elif journal in ['Journal of Power Sources','Electrochimica Acta','Journal of Electroanalytical Chemistry','Energy Storage Materials','Advanced Materials',
 				  'Advanced Energy Materials','ACS Energy Letters','Batteries & Supercaps','Nano Energy','Chemistry of Materials',
-				  'Advanced Functional Materials','ACS Applied Materials']:
+				  'Small','Advanced Functional Materials','ACS Applied Materials','ACS Nano','ACS Central Science','Nano Letters']:
 		makedirs('./data/',exist_ok=True)
 		soup = BeautifulSoup(raw,'lxml')
 		links_raw = soup.find_all('img')		

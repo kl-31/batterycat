@@ -32,6 +32,18 @@ else:
 					{'name': 'Nature Energy',
 					  'path': 'http://feeds.nature.com/nenergy/rss/current',
 					  'etag': ''},
+				'nmat':
+					{'name': 'Nature Materials',
+					  'path': 'https://www.nature.com/nmat.rss',
+					  'etag': ''},	  
+				'nnano':
+					{'name': 'Nature Nano',
+					  'path': 'https://www.nature.com/nnano.rss',
+					  'etag': ''},	  
+				'ncomms':
+					{'name': 'Nature Comms',
+					  'path': 'https://www.nature.com/nnano.rss',
+					  'etag': ''},	  
 				'ees':
 					{'name': 'Energy & Environment Science',
 					  'path': 'http://feeds.rsc.org/rss/ee',
@@ -52,6 +64,19 @@ else:
 					{'name': 'ACS Energy Letters',
 						  'path': 'http://feeds.feedburner.com/acs/aelccp',
 						  'etag': ''},
+					'acsnano':
+					{'name': 'ACS Nano',
+						  'path': 'http://feeds.feedburner.com/acs/ancac3',
+						  'etag': ''},
+					'acscent':
+					{'name': 'ACS Central Science',
+						  'path': 'http://feeds.feedburner.com/acs/acscii',
+						  'etag': ''},
+					'nanolett':
+					{'name': 'Nano Letters',
+						  'path': 'http://feeds.feedburner.com/acs/nalefd',
+						  'etag': ''},
+
 					  'bs':
 					{'name': 'Batteries & Supercaps',
 						  'path': 'https://onlinelibrary.wiley.com/feed/25666223/most-recent',
@@ -88,10 +113,18 @@ else:
 					{'name': 'Advanced Functional Materials',
 						  'path': 'https://onlinelibrary.wiley.com/feed/16163028/most-recent',
 						  'etag': ''},
+					  'small':
+					{'name': 'Small',
+						  'path': 'https://onlinelibrary.wiley.com/feed/16136829/most-recent',
+						  'etag': ''},
 					  'mathoriz':
 					{'name': 'Materials Horizons',
 						  'path': 'http://feeds.rsc.org/rss/mh',
-						  'etag': ''}									
+						  'etag': ''},
+					  'sciadv':
+					{'name': 'Science Advances',
+						  'path': 'https://advances.sciencemag.org/rss/current.xml',
+						  'etag': ''}																		
 					}
 
 written = 0
@@ -117,7 +150,7 @@ for feed in feed_info.keys():
 			else:
 				authors_raw = ''
 		elif feed_name in ['Journal of Power Sources','Electrochimica Acta','Journal of Electroanalytical Chemistry','Energy Storage Materials',
-					 'ACS Energy Letters','Nano Energy','Chemistry of Materials','ACS Applied Materials']:
+					 'ACS Energy Letters','Nano Energy','Chemistry of Materials','ACS Applied Materials','ACS Nano','ACS Central Science','Nano Letters']:
 			image_raw = entry.summary
 			if 'authors' in entry:
 				authors_raw = entry.authors
@@ -141,7 +174,7 @@ for feed in feed_info.keys():
 				authors_raw = entry.author
 			else:
 				authors_raw = ''
-		elif feed_name in ['Advanced Energy Materials','Batteries & Supercaps','Advanced Materials','Advanced Functional Materials']:
+		elif feed_name in ['Advanced Energy Materials','Batteries & Supercaps','Advanced Materials','Advanced Functional Materials','Small']:
 			image_raw = entry.content[0].value
 			authors_raw = entry.link # scrape authors from html
 		else:
