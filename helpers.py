@@ -373,13 +373,13 @@ def retweet_old(number):
 	api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True,retry_count=10, retry_delay=15, retry_errors=set([503]))
 	tweets = []
 	# retweeting tweets
-	tweets = api.user_timeline(count = 200)
+	tweets = api.user_timeline(count = 400)
 	
 	for i in range(number):
-		while 1:
-			tweet = choice(tweets)
-			if tweet.retweeted == False:
-				break
+		#while 1:
+		tweet = choice(tweets)
+		#	if tweet.retweeted == False:
+		#		break
 		try:
 			api.retweet(tweet.id)
 			sleep(30*60)	
