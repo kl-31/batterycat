@@ -14,7 +14,7 @@ else:
 	feed_info = {
 			'jes': 
 				{'name':'Journal of The Electrochemical Society', 
-				 'path': 'http://jes.ecsdl.org/cgi/collection/rss?journal_coll_id=A',
+				 'path': 'https://iopscience.iop.org/journal/rss/1945-7111',
 				 'etag':''},
 			 'jps':
 				 {'name': 'Journal of Power Sources',
@@ -142,7 +142,8 @@ for feed in feed_info.keys():
 	for i in range(len(feed_rss.entries)):
 		entry = feed_rss.entries[i]
 		if feed_name == 'Journal of The Electrochemical Society': # for each journal, there is a raw source/link from which image can be pulled.
-			image_raw = entry.link
+			#image_raw = 'https://iopscience.iop.org/article/'+ feed_rss.entries[0].prism_doi # 17-7-2020 fixed for new IOP platform
+			image_raw = '' #  17-7-2020 blocks bots. haven't figured it out yet
 			if 'authors' in entry:
 				authors_raw = entry.authors
 			elif 'author' in entry:

@@ -20,6 +20,7 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import re
 import datetime
+import requests
 from bs4 import BeautifulSoup
 import urllib
 from subprocess import call
@@ -176,12 +177,14 @@ def scrape_image(raw, journal):
 		
 	if journal == 'Journal of The Electrochemical Society':
 		makedirs('./data/',exist_ok=True)
-		raw=raw.replace('/cgi','')
-		raw=raw.replace('/short','')
-		raw=raw.replace('?rss=1','.figures-only')
-		soup = BeautifulSoup(urllib.request.urlopen(raw).read(),'lxml')
-		links_raw = soup.find_all('a',{'class':'in-nw'})		
-		links=[dirname(raw)+'/'+x['href'].replace('expansion.html','large.jpg') for x in links_raw]
+#		raw=raw.replace('/cgi','')
+#		raw=raw.replace('/short','')
+#		raw=raw.replace('?rss=1','.figures-only')
+		#soup = BeautifulSoup(urllib.request.urlopen(raw).read(),'lxml')
+		headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:20.0) Gecko/20100101 Firefox/20.0'}
+		soup = BeautifulSoup(requests.get(raw,headers=headers).text,'lxml') # 17-7-2020 blocks bot. haven't figured it out yet
+		links_raw = soup.find_all('a',{'class':'btn btn-primary fig-dwnld-hi-img'})		
+		#links=[dirname(raw)+'/'+x['href'].replace('expansion.html','large.jpg') for x in links_raw]
 		if len(links)>0:
 			pic_raw = choice(links)
 		else:
